@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgroClima Guarapuava – Previsão do Tempo para Agricultores</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="farmCanvas"></canvas>
+
+<header>
+  <div class="logo">🌾 Agro<span>Clima</span></div>
+  <nav>
+    <a href="#previsao">Previsão</a>
+    <a href="#dicas">Dicas de Plantio</a>
+    <a href="#lua">Fase da Lua</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-location">📍 Guarapuava – PR, Brasil</div>
+  <h1>Previsão do Tempo<br/>para <em>Agricultores</em></h1>
+  <p>Informações climáticas detalhadas para apoiar o plantio e a colheita na região de Guarapuava.</p>
+  <div class="date-badge" id="dateDisplay"></div>
+</section>
+
+<div class="main-card" id="previsao">
+  <div class="temp-hero">
+    <div class="temp-left">
+      <div class="condition-label">Agora em Guarapuava</div>
+      <div class="big-temp">18<sup>°C</sup></div>
+      <div class="condition-text">☀️ Céu limpo com brisa suave</div>
+      <div class="feels-like">Sensação térmica: 16°C</div>
+      <div class="mini-stats">
+        <div class="mini-stat"><span class="label">Mínima</span><span class="value">11°C</span></div>
+        <div class="mini-stat"><span class="label">Máxima</span><span class="value">22°C</span></div>
+        <div class="mini-stat"><span class="label">Nascer do sol</span><span class="value">06:42</span></div>
+        <div class="mini-stat"><span class="label">Pôr do sol</span><span class="value">17:51</span></div>
+      </div>
+    </div>
+    <div class="main-icon-area">
+      <div class="sun-wrap">
+        <svg class="sun-svg" viewBox="-65 -65 130 130" width="130" height="130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="sunGrad" cx="50%" cy="40%" r="60%">
+              <stop offset="0%"   stop-color="#FFF5A0"/>
+              <stop offset="45%"  stop-color="#FFD93D"/>
+              <stop offset="100%" stop-color="#F4A010"/>
+            </radialGradient>
+            <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"  stop-color="#FFD93D" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#FFD93D" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="softglow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <circle r="58" fill="url(#glowGrad)">
+            <animate attributeName="r" values="52;62;52" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+          </circle>
+
+          <g filter="url(#softglow)">
+            <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="18s" repeatCount="indefinite"/>
+            <rect x="-3" y="-60" width="6" height="20" rx="3" fill="#FFD93D" opacity="0.9"/>
+            <rect x="-3" y="40"  width="6" height="20" rx="3" fill="#FFD93D" opacity="0.9"/>
+            <rect y="-3" x="-60" width="20" height="6" rx="3" fill="#FFD93D" opacity="0.9"/>
+            <rect y="-3" x="40"  width="20" height="6" rx="3" fill="#FFD93D" opacity="0.9"/>
+            <rect x="-3" y="-60" width="6" height="20" rx="3" fill="#FFD93D" opacity="0.9" transform="rotate(45)"/>
+            <rect x="-3" y="40"  width="6" height="20" rx="3" fill="#FFD93D" opacity="0.9" transform="rotate(45)"/>
+            <rect y="-3" x="-60" width="20" height="6" rx="3" fill="#FFD93D" opacity="0.9" transform="rotate(45)"/>
+            <rect y="-3" x="40"  width="20" height="6" rx="3" fill="#FFD93D" opacity="0.9" transform="rotate(45)"/>
+          </g>
+
+          <g opacity="0.55">
+            <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="26s" repeatCount="indefinite"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(30)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(60)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(90)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(120)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(150)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(180)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(210)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(240)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(270)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(300)"/>
+            <rect x="-2" y="-55" width="4" height="14" rx="2" fill="#FFF5A0" transform="rotate(330)"/>
+          </g>
+
+          <circle r="32" fill="url(#sunGrad)">
+            <animate attributeName="r" values="30;33;30" dur="3s" repeatCount="indefinite"/>
+          </circle>
+
+          <circle r="18" fill="white" opacity="0.18"/>
+          <circle r="10" cx="-7" cy="-8" fill="white" opacity="0.22"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert-bar">
+  <div class="alert-inner">
+    <span class="alert-icon">🔔</span>
+    <div class="alert-text">
+      <strong>Atenção, agricultor!</strong>
+      Geada prevista para a madrugada de quinta-feira (12/06). Proteja mudas sensíveis e culturas de inverno expostas.
+    </div>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="metric-card rain">
+    <div class="icon-wrap">
+      <div>
+        <div class="cloud-shape"></div>
+        <div class="rain-drops">
+          <div class="drop"></div><div class="drop"></div><div class="drop"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-label">Chuva hoje</div>
+    <div class="card-value">4<span class="card-unit">mm</span></div>
+    <div class="card-desc">Precipitação leve prevista à tarde. Solo com boa umidade.</div>
+  </div>
+  <div class="metric-card wind">
+    <div class="icon-wrap">
+      <div class="wind-lines"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+    </div>
+    <div class="card-label">Vento</div>
+    <div class="card-value">17<span class="card-unit">km/h</span></div>
+    <div class="card-desc">Direção: Sul. Brisa moderada, ideal para secagem de grãos.</div>
+  </div>
+  <div class="metric-card humidity">
+    <div class="icon-wrap"><div class="hum-drop"></div></div>
+    <div class="card-label">Umidade</div>
+    <div class="card-value">72<span class="card-unit">%</span></div>
+    <div class="card-desc">Umidade relativa elevada. Atenção a fungos em lavouras fechadas.</div>
+  </div>
+  <div class="metric-card uv">
+    <div class="icon-wrap"><div class="uv-badge">UV</div></div>
+    <div class="card-label">Índice UV</div>
+    <div class="card-value">4<span class="card-unit">/11</span></div>
+    <div class="card-desc">Moderado. Use proteção solar ao trabalhar entre 10h e 15h.</div>
+  </div>
+</div>
+
+<div class="forecast-row">
+  <div class="section-title">📅 Próximos 7 dias</div>
+  <div class="forecast-scroll">
+    <div class="forecast-day today">
+      <div class="day-name">Hoje</div><div class="day-icon">☀️</div>
+      <div class="day-max">22°</div><div class="day-min">11°</div>
+      <div class="day-rain-chance">💧 10%</div>
+    </div>
+    <div class="forecast-day">
+      <div class="day-name">Qui</div><div class="day-icon">⛅</div>
+      <div class="day-max">19°</div><div class="day-min">8°</div>
+      <div class="day-rain-chance">💧 25%</div>
+    </div>
+    <div class="forecast-day">
+      <div class="day-name">Sex</div><div class="day-icon">🌧️</div>
+      <div class="day-max">15°</div><div class="day-min">10°</div>
+      <div class="day-rain-chance">💧 80%</div>
+    </div>
+    <div class="forecast-day">
+      <div class="day-name">Sáb</div><div class="day-icon">🌦️</div>
+      <div class="day-max">17°</div><div class="day-min">11°</div>
+      <div class="day-rain-chance">💧 45%</div>
+    </div>
+    <div class="forecast-day">
+      <div class="day-name">Dom</div><div class="day-icon">☀️</div>
+      <div class="day-max">21°</div><div class="day-min">10°</div>
+      <div class="day-rain-chance">💧 5%</div>
+    </div>
+    <div class="forecast-day">
+      <div class="day-name">Seg</div><div class="day-icon">⛅</div>
+      <div class="day-max">20°</div><div class="day-min">12°</div>
+      <div class="day-rain-chance">💧 20%</div>
+    </div>
+    <div class="forecast-day">
+      <div class="day-name">Ter</div><div class="day-icon">🌤️</div>
+      <div class="day-max">23°</div><div class="day-min">13°</div>
+      <div class="day-rain-chance">💧 8%</div>
+    </div>
+  </div>
+</div>
+
+<div class="dicas-section" id="dicas">
+  <div class="section-title">🌱 Dicas de Plantio para Guarapuava</div>
+  <div class="dicas-grid">
+    <div class="dica-card">
+      <div class="dica-icon">🌽</div>
+      <div class="dica-body">
+        <div class="dica-title">Milho de Inverno</div>
+        <div class="dica-text">Com temperaturas entre 10°C e 22°C, o milho está em fase ideal de desenvolvimento vegetativo. Monitore a umidade do solo e evite irrigação excessiva nos próximos dias.</div>
+      </div>
+    </div>
+    <div class="dica-card">
+      <div class="dica-icon">🧄</div>
+      <div class="dica-body">
+        <div class="dica-title">Alho e Cebola</div>
+        <div class="dica-text">Junho é excelente para o plantio de alho-semente em Guarapuava. Solo deve estar bem drenado. Evite plantar antes de chuvas previstas para não causar apodrecimento dos bulbos.</div>
+      </div>
+    </div>
+    <div class="dica-card">
+      <div class="dica-icon">🥔</div>
+      <div class="dica-body">
+        <div class="dica-title">Batata</div>
+        <div class="dica-text">Clima fresco favorece o desenvolvimento de batata. Atenção: a previsão de geada na quinta pode danificar brotos expostos. Cubra as fileiras ou aplique antifrost se necessário.</div>
+      </div>
+    </div>
+    <div class="dica-card">
+      <div class="dica-icon">🌾</div>
+      <div class="dica-body">
+        <div class="dica-title">Trigo e Aveia</div>
+        <div class="dica-text">Período ideal para adubação de cobertura em trigo já plantado. O vento Sul de 17 km/h favorece a secagem após pulverizações. Evite aplicação de defensivos com ventos acima de 15 km/h.</div>
+      </div>
+    </div>
+    <div class="dica-card">
+      <div class="dica-icon">💧</div>
+      <div class="dica-body">
+        <div class="dica-title">Irrigação</div>
+        <div class="dica-text">Com 4 mm de chuva previstos hoje e umidade do solo boa, suspenda a irrigação por 24 a 48 horas. Economize água e reduza o risco de doenças fúngicas nas lavouras.</div>
+      </div>
+    </div>
+    <div class="dica-card">
+      <div class="dica-icon">🐛</div>
+      <div class="dica-body">
+        <div class="dica-title">Pragas e Doenças</div>
+        <div class="dica-text">Umidade de 72% favorece o desenvolvimento de ferrugem e mancha foliar em cereais. Inspecione as lavouras e aplique fungicidas preventivos antes da frente de chuvas de sexta-feira.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="moon-section" id="lua">
+  <div class="section-title">🌙 Fase da Lua</div>
+  <div class="moon-card">
+    <div class="moon-outer"></div>
+    <div class="moon-info">
+      <h3>Quarto Minguante — 11 de Junho</h3>
+      <p>A lua minguante é favorável para a poda, capina e controle de pragas. Evite plantios de raízes nesta fase — a seiva tende a concentrar-se nas folhas. Ideal para colheita de grãos destinados ao armazenamento.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>🌾 <strong>AgroClima Guarapuava</strong> — Trabalho Escolar • Dados simulados para fins educativos • Guarapuava – PR, Brasil</p>
+  <p style="margin-top:6px;">Desenvolvido para auxiliar os agricultores da região com informações climáticas acessíveis.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
