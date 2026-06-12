@@ -243,7 +243,7 @@ function drawBird(bx, by, wingPhase, size) {
 }
 
 // ── TRATOR (simples) ──
-let tractorX = -180;
+let tractorX = window.innerWidth + 200; // Começa na direita
 const tractorY_frac = 0.79;
 
 function drawTractor(tx, ty) {
