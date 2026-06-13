@@ -242,18 +242,15 @@ function drawBird(bx, by, wingPhase, size) {
   ctx.stroke();
 }
 
-// ── TRATOR (simples - MODIFICADO PARA ANDAR PRA ESQUERDA) ──
-let tractorX = window.innerWidth + 200; // Alterado: Começa fora da tela no lado direito
+// ── TRATOR (Configurado para ir da Esquerda para Direita) ──
+let tractorX = -180; // Retornado: Começa antes da tela no lado esquerdo
 const tractorY_frac = 0.79;
 
 function drawTractor(tx, ty) {
   ctx.save();
   ctx.translate(tx, ty);
 
-  // Alterado: Inverte o desenho horizontalmente para olhar para a esquerda e compensa a largura
-  ctx.scale(-1, 1);
-  ctx.translate(-70, 0);
-
+  // Retornado ao padrão original: Cabine na direita, roda menor na frente (direita)
   // corpo
   ctx.fillStyle = '#c0392b';
   ctx.beginPath();
@@ -272,21 +269,21 @@ function drawTractor(tx, ty) {
   ctx.roundRect(36, -45, 22, 14, 2);
   ctx.fill();
 
-  // rodas traseiras
+  // rodas traseiras (RODA MAIOR na esquerda)
   ctx.fillStyle = '#1a1a1a';
   ctx.beginPath(); ctx.arc(14, 0, 16, 0, Math.PI*2); ctx.fill();
   ctx.fillStyle = '#555';
   ctx.beginPath(); ctx.arc(14, 0, 9, 0, Math.PI*2); ctx.fill();
 
-  // rodas dianteiras
+  // rodas dianteiras (RODA MENOR na direita)
   ctx.fillStyle = '#1a1a1a';
   ctx.beginPath(); ctx.arc(58, -3, 11, 0, Math.PI*2); ctx.fill();
   ctx.fillStyle = '#555';
   ctx.beginPath(); ctx.arc(58, -3, 6, 0, Math.PI*2); ctx.fill();
 
-  // detalhes
+  // detalhes (farol dianteiro na direita)
   ctx.fillStyle = '#f39c12';
-  ctx.beginPath(); ctx.arc(4, -18, 4, 0, Math.PI*2); ctx.fill(); // farol
+  ctx.beginPath(); ctx.arc(4, -18, 4, 0, Math.PI*2); ctx.fill(); 
 
   ctx.restore();
 }
@@ -341,9 +338,9 @@ function draw(ts) {
     drawPlant(p.x, p.y, p.scale, sway);
   });
 
-  // Alterado: Movimentação e limites do trator ajustados para a esquerda
-  tractorX -= 0.55;
-  if (tractorX < -200) tractorX = W + 200;
+  // Movimentação do trator configurada de volta para a direita
+  tractorX += 0.55;
+  if (tractorX > W + 200) tractorX = -200;
   drawTractor(tractorX, H * tractorY_frac);
 
   // Névoa sutil na base (para transição com o conteúdo)
