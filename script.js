@@ -242,13 +242,17 @@ function drawBird(bx, by, wingPhase, size) {
   ctx.stroke();
 }
 
-// ── TRATOR (simples) ──
-let tractorX = window.innerWidth + 200; // Começa na direita
+// ── TRATOR (simples - MODIFICADO PARA ANDAR PRA ESQUERDA) ──
+let tractorX = window.innerWidth + 200; // Alterado: Começa fora da tela no lado direito
 const tractorY_frac = 0.79;
 
 function drawTractor(tx, ty) {
   ctx.save();
   ctx.translate(tx, ty);
+
+  // Alterado: Inverte o desenho horizontalmente para olhar para a esquerda e compensa a largura
+  ctx.scale(-1, 1);
+  ctx.translate(-70, 0);
 
   // corpo
   ctx.fillStyle = '#c0392b';
@@ -337,9 +341,9 @@ function draw(ts) {
     drawPlant(p.x, p.y, p.scale, sway);
   });
 
-  // Trator
-  tractorX += 0.55;
-  if (tractorX > W + 200) tractorX = -200;
+  // Alterado: Movimentação e limites do trator ajustados para a esquerda
+  tractorX -= 0.55;
+  if (tractorX < -200) tractorX = W + 200;
   drawTractor(tractorX, H * tractorY_frac);
 
   // Névoa sutil na base (para transição com o conteúdo)
